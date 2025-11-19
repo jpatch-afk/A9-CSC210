@@ -10,13 +10,13 @@ Listed below are various aspects of the assignment.  When you turn in your work,
 
 ## Assignment Points:
 
-_____ 1 pt: Implements lookup method correctly
+_YES____ 1 pt: Implements lookup method correctly
 
-_____ 1 pt: Implements insert method correctly
+_YES____ 1 pt: Implements insert method correctly
 
-_____ 1 pt: Implements delete method correctly
+_YES____ 1 pt: Implements delete method correctly
 
-_____ 2 pts: Implements left and right rotation methods correctly
+_YES____ 2 pts: Implements left and right rotation methods correctly
 
 _____ 1 pt: Includes tests for all the methods above
 
