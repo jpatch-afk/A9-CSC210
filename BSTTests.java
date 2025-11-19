@@ -48,11 +48,34 @@ public class BSTTests {
     public void testBSTInsertions() {
         Integer[][] gt1 = {{5}};
         Integer[][] gt2 = {{5},{null,7}};
+        Integer[][] gt3 = {{null, 7}};
+        Integer[][] gt4 = {{5}, {6}, {7}, {9}, {10}};
+        Integer[][] gt5 = {{5}, {6}, {9}, {10}};
 
         BST<Integer> tree = new BST<>(5);
         verifyBT(tree, gt1);
 
+        //Insert
         tree.insert(7);
         verifyBT(tree, gt2);
+
+        tree.insert(6);
+        tree.insert(7);
+        tree.insert(9);
+        tree.insert(10);
+        verifyBT(tree, gt4);
+
+        //Delete Tests
+        tree.deleteWithCopyLeft(5);
+        verifyBT(tree, gt3);
+
+        tree.deleteWithCopyLeft(7);
+        verifyBT(tree, gt5);
+        
+        //Rotate Left
+
+
+        //Rotate Right
+        
     }
 }
