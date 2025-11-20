@@ -6,15 +6,28 @@
  */
 public class BST<E extends Comparable<E>> extends BinaryTree<E> implements BST_Ops<E> {
 
-
+    /**
+     * Constructor that creates a tree with a root 
+     * @param value value that becomes the root 
+     */
     public BST(E value){
         super(value);
     }
 
+    /**
+     * Constructor that creates a tree with a left and a right child
+     * @param data root
+     * @param left value to create left child
+     * @param right value to create right child
+     */
     public BST(E data, BinaryTree<E> left, BinaryTree<E> right){
         super(data, left, right);
     }
 
+    /**
+     * Method to set the value for a left child
+     * @param left value to set the left child
+     */
     public void setLeft(BinaryTree<E> left) {
         if ((left == null)||(left instanceof BST<E>)) {
           super.setLeft(left);
@@ -23,6 +36,10 @@ public class BST<E extends Comparable<E>> extends BinaryTree<E> implements BST_O
         }
     }
 
+    /**
+     * Method to set the value for a right child
+     * @param right value to set the right child
+     */
     public void setRight(BinaryTree<E> right) {
         if ((right == null)||(right instanceof BST<E>)) {
           super.setRight(right);
@@ -31,15 +48,28 @@ public class BST<E extends Comparable<E>> extends BinaryTree<E> implements BST_O
         }
     }
 
+    /**
+     * Getter for left child
+     * @return value of left child
+     */
     public BST<E> getLeft(){
         return (BST<E>) super.getLeft();
     }
 
+    /**
+     * Getter for right child
+     * @return value of right child
+     */
     public BST<E> getRight(){
         return (BST<E>) super.getRight();
     }
 
-
+    /**
+     * Finds the node that corresponds to the given data
+     * 
+     * @param data value to be found
+     * @return node that the given data corresponds to
+     */
     public BST<E> lookup(E data){
 
         BinaryTree<E> tree = this;
@@ -60,6 +90,11 @@ public class BST<E extends Comparable<E>> extends BinaryTree<E> implements BST_O
         return null;
     }
 
+    /**
+     * Inserts given data while preserving BST order
+     * 
+     * @param data data to be inserted
+     */
     public void insert(E data){
 
         if(this.getData() == null){
@@ -97,6 +132,12 @@ public class BST<E extends Comparable<E>> extends BinaryTree<E> implements BST_O
         }
     }
 
+    /**
+     * Deletes a node within the tree with copy left preserving order
+     * 
+     * @param evictee node to be deleted
+     * @return new tree without the given evictee
+     */
     public BST<E> deleteWithCopyLeft(E evictee){
 
         BST<E> newTree = this;
@@ -134,6 +175,11 @@ public class BST<E extends Comparable<E>> extends BinaryTree<E> implements BST_O
         }
     }
 
+    /**
+     * Rotates an unbalanced tree with rotate left
+     * 
+     * @return new tree
+     */
     public BST<E> rotateLeft(){
 
         BST<E> node = this;
@@ -149,6 +195,11 @@ public class BST<E extends Comparable<E>> extends BinaryTree<E> implements BST_O
         return newNode;
     }
 
+    /**
+     * Rotates an unbalanced tree with rotate right
+     * 
+     * @return new tree
+     */
     public BST<E> rotateRight(){
 
         BST<E> node = this;
