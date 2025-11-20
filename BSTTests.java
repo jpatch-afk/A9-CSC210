@@ -48,34 +48,154 @@ public class BSTTests {
     public void testBSTInsertions() {
         Integer[][] gt1 = {{5}};
         Integer[][] gt2 = {{5},{null,7}};
-        Integer[][] gt3 = {{null, 7}};
-        Integer[][] gt4 = {{5}, {6}, {7}, {9}, {10}};
-        Integer[][] gt5 = {{5}, {6}, {9}, {10}};
+
 
         BST<Integer> tree = new BST<>(5);
         verifyBT(tree, gt1);
 
-        //Insert
         tree.insert(7);
         verifyBT(tree, gt2);
 
-        tree.insert(6);
-        tree.insert(7);
-        tree.insert(9);
-        tree.insert(10);
-        verifyBT(tree, gt4);
+    }
 
-        //Delete Tests
-        tree.deleteWithCopyLeft(5);
-        verifyBT(tree, gt3);
+    @Test
+    public void testInsertLeft(){
+        Integer[][] expected = {{10}, {7, null}};
+
+        BST<Integer> tree = new BST<>(10);
+
+        tree.insert(7);
+        verifyBT(tree, expected);
+    }
+
+    @Test
+    public void testInsertRight(){
+        Integer[][] expected = {{10}, {null, 12}};
+
+        BST<Integer> tree = new BST<>(10);
+
+        tree.insert(12);
+        verifyBT(tree, expected);
+    }
+
+    @Test 
+    public void testDuplicate(){
+        Integer[][] expected = {{10}, {null, 12}};
+
+        BST<Integer> tree = new BST<>(10);
+
+        tree.insert(12);
+        tree.insert(12); //duplicate node
+        verifyBT(tree, expected);
+    }
+
+    @Test
+    public void testDeleteLeaf(){
+        Integer[][] first = {{10}, {7, 12}};
+        Integer[][] second = {{10}, {7, null}};
+
+        BST<Integer> tree = new BST<>(10);
+
+        tree.insert(7);
+        tree.insert(12);
+        verifyBT(tree, first);
+
+        tree.deleteWithCopyLeft(12);
+        verifyBT(tree, second);
+    }
+
+    @Test 
+    public void testDeleteOneChild(){
+        Integer[][] first = {{10}, {7, 12}, {5, null, null, null}};
+        Integer[][] second = {{10}, {5, 12}};
+
+        BST<Integer> tree = new BST<>(10);
+        tree.insert(7);
+        tree.insert(12);
+        verifyBT(tree, first);
 
         tree.deleteWithCopyLeft(7);
-        verifyBT(tree, gt5);
-        
-        //Rotate Left
+        verifyBT(tree, second); //5 is then promoted to where 7 was as its only child
+    }
 
+    @Test
+    public void testDeleteTwoChildren(){
+        Integer[][] first = {{10}, {7, 12}};
+        Integer[][] first_delete = {{7}, {null, 12}};
 
-        //Rotate Right
+        //Deleting root
+        BST<Integer> tree = new BST<>(10);
+        tree.insert(7);
+        tree.insert(12);
+        verifyBT(tree, first);
+
+        tree.deleteWithCopyLeft(10);
+        verifyBT(tree, first_delete);
+
+        //Deleting another node with two children 
+        Integer[][] second = {{10}, {7, 12}, {6, 8, 11, 13}};
+        Integer[][] second_delete = {{10}, {6, 12}, {null, 8, 11, 13}};
+
+        BST<Integer> new_tree = new BST<Integer>(10);
+        new_tree.insert(7);
+        new_tree.insert(12);
+        new_tree.insert(6);
+        new_tree.insert(8);
+        new_tree.insert(11);
+        new_tree.insert(13);
+        verifyBT(new_tree, second);
+
+        new_tree.deleteWithCopyLeft(7);
+        verifyBT(new_tree, second_delete);
+    }
+
+    @Test
+    public void testLeftRotate(){
+
+        //root only has left child
+
+        BST<Integer> first_root = new BST<>(12);
+        first_root.insert(9);
+        BST<Integer> new_root_1 = first_root.rotateLeft();
+        assertSame(first_root, new_root_1);
+
+        //more complex tree
+
+        Integer[][] first = {{10}, {null, 20}, {15, 21, null, null}};
+        Integer[][] afterRotate = {{20}, {10, 21}, {null, 15, null, null}};
         
+        BST<Integer> second_root = new BST<>(10);
+        second_root.insert(20);
+        second_root.insert(15);
+        second_root.insert(21);
+        verifyBT(second_root, first);
+
+        BST<Integer> new_root_2 = second_root.rotateLeft();
+        verifyBT(new_root_2, afterRotate);
+    }
+
+    @Test
+    public void testRightRotate(){
+
+        //root only has right child
+
+        BST<Integer> first_root = new BST<>(12);
+        first_root.insert(15);
+        BST<Integer> new_root_1 = first_root.rotateRight();
+        assertSame(first_root, new_root_1);
+
+        //more complex tree
+
+        Integer[][] first = {{10}, {5, null}, {4, 9, null, null}};
+        Integer[][] afterRotate = {{5}, {4, 10}, {null, 9, null, null}};
+
+        BST<Integer> second_root = new BST<>(10);
+        second_root.insert(5);
+        second_root.insert(4);
+        second_root.insert(9);
+        verifyBT(second_root, first);
+
+        BST<Integer> new_root_2 = second_root.rotateRight();
+        verifyBT(new_root_2, afterRotate);
     }
 }
