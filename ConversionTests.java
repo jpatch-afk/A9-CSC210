@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 /**
  * Unit tests for array/BST/DLL conversion functions.
  *
- * @author YOUR_NAME_HERE
+ * @author Jenna Paczkowski 
  * @version Fall 2025
  */
 public class ConversionTests {
@@ -22,19 +22,69 @@ public class ConversionTests {
             assertNull("Head should be null for empty list", list.getHead());
             assertNull("Tail should be null for empty list", list.getTail());
         } else {
-            assertNull("Head's previous should be null", list.getHead().getPrevious());
-            assertNull("Tail's next should be null", list.getTail().getNext());
+            assertNull("Head's previous should be null", list.getHead().getLeft());
+            assertNull("Tail's next should be null", list.getTail().getRight());
 
             for (int i = 0; i < arr.length; i++) {
-                NodeDL<T> pos = list.getHead();
-                for (int j = 0; j < i; j++) pos = pos.getNext();
+                BinaryTree<T> pos = list.getHead();
+                for (int j = 0; j < i; j++) pos = pos.getRight();
 
-                NodeDL<T> pos2 = list.getTail();
-                for (int j = 0; j < arr.length - 1 - i; j++) pos2 = pos2.getPrevious();
+                BinaryTree<T> pos2 = list.getTail();
+                for (int j = 0; j < arr.length - 1 - i; j++) pos2 = pos2.getLeft();
 
                 assertSame("Node mismatch at position " + i, pos, pos2);
                 assertEquals("Value mismatch at position " + i, arr[i], pos.getData());
             }
         }
+    }
+
+    @Test
+    public void testArrayEmptyBST(){
+        Integer[] empty = {};
+
+        BST<Integer> result = Conversion.arrayToBST(empty);
+        assertNull(result);
+    }
+
+    @Test
+    public void testArrayBST(){
+        Integer[] array = {5, 4, 8};
+
+        BST<Integer> result = Conversion.arrayToBST(array);
+
+        assertEquals(Integer.valueOf(5), result.getData());
+        assertEquals(Integer.valueOf(4), result.getLeft().getData());
+        assertEquals(Integer.valueOf(8), result.getRight().getData());
+
+    }
+
+    @Test
+    public void testBSTToDDL(){
+
+        BST<Integer> tree = new BST<>(5);
+        Integer[] arr = {4, 5, 8};
+
+        tree.insert(4);
+        tree.insert(8); 
+
+        BinaryTree<Integer>[] array = Conversion.binaryTreeToDLLHelp(tree);
+        verifyArray(array, arr);
+
+        DLL<Integer> result = Conversion.binaryTreeToDLL(tree);
+
+        //checks the DLL 
+        BinaryTree<Integer> head = result.getHead(); 
+        BinaryTree<Integer> middle = head.getRight();
+        BinaryTree<Integer> tail = middle.getRight();
+
+        //Tests 
+        assertEquals(Integer.valueOf(4), head.getData());
+        assertEquals(Integer.valueOf(5), middle.getData());
+        assertEquals(Integer.valueOf(8), tail.getData());
+
+        verifyList(result, arr);
+
+        assertNull(head.getLeft());
+        assertNull(tail.getRight());
     }
 }
