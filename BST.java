@@ -146,19 +146,6 @@ public class BST<E extends Comparable<E>> extends BinaryTree<E> implements BST_O
            node.setRight(newNode.getLeft());
            newNode.setLeft(node);
         }
-
-        //checks to see if the rotation preserves BST order
-        BST<E> leftNode = node.getLeft();
-       
-        while(true) { //transverses the tree 
-            if(node.getData().compareTo(leftNode.getData()) < 0){
-                break;
-            }
-            else if(node.getData().compareTo(leftNode.getData()) > 0){
-                node.setRight(leftNode.getLeft());
-                leftNode.setLeft(node);
-            }
-        }
         return newNode;
     }
 
@@ -173,19 +160,6 @@ public class BST<E extends Comparable<E>> extends BinaryTree<E> implements BST_O
         else {
            node.setLeft(newNode.getRight());
            newNode.setRight(node);
-        }
-
-        //checks to see if the rotation preserves BST order
-        BST<E> rightNode = node.getRight();
-
-        while(true) { //transverses the tree 
-            if(node.getData().compareTo(rightNode.getData()) < 0){
-                break;
-            }
-            else if(node.getData().compareTo(rightNode.getData()) > 0){
-                node.setLeft(rightNode.getRight());
-                rightNode.setRight(node);
-            }
         }
         return newNode;
     }
